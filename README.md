@@ -2,6 +2,8 @@
 
 #### This app has been deployed to [`shinyapps.io`](https://butterflyology.shinyapps.io/pythagorean_expectation/)
 
+#### The slide deck lives [here](https://butterflyology.github.io/DDP_HW4/Expected_wins.html)
+
 This is an app developed for the final project in the Developing Data Products *Coursera* module.
 
 This `Shiny` app uses the Bill James' Pythagorean Formula and predicts the number of wins over a 162 games season given a user provided number of runs scored and runs allowed.
