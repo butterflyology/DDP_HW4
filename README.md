@@ -22,6 +22,8 @@ On the right side of the app are three outputs:
 
 Important things in this directory:
 
+- `Expected_wins.html` - The rendered `.html`.
+- `Expected_wins.Rmd` - The `RMarkdown` ioslides file used to make the above `.html`.
 - `HW4.RProj` - The `RStudio` project file.
 - <kbd>images/</kbd>
   - `App_screen_shot.png` - The screen shot used in the `README.md` file.
@@ -29,3 +31,7 @@ Important things in this directory:
 - <kbd>rsconnect/</kbd> - The directory that contains important things for `shinyapps.io`.
 - `server.R` - The server half of the `shiny` app.
 - `ui.R` - The user interface half od the `shiny` app.
+
+Major commit history:
+
+1. 2017-10-04 - Initial commit; working shiny app upload; added slides for presentation.

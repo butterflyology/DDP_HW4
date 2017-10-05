@@ -1,0 +1,75 @@
+---
+title: "Expected wins"
+author: "Chris Hamm"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+## 
+
+```{r preliminaries, echo = FALSE, message = FALSE}
+library("Lahman")
+library("tidyverse")
+set.seed(7863535)
+```
+
+Major League Baseball is a sport that loves numbers and statistics. 
+
+There is an amazingly simple association between the number of runs a team scores and the number of runs it allows. Bill James and other called this association the **Pythagorean expectation**.
+
+
+$$W\% = \frac{R^{k}}{R^{k} + RA^{k}}$$
+
+- *R* is the number of runs a team scores.
+- *RA* is the number of runs a team allows.
+- *k* is an exponant; 2 in our case. 
+- *W%* is the winning percentage.
+
+Multiply *W* by 162 and you get the number of expected wins. 
+
+##
+
+What is the correlation between the expected number of wins and the actual number of wins? The correlation is **0.97%**!!!
+
+```{r, echo = FALSE, message = FALSE, results = "hide"}
+myteams <- Teams %>% 
+  select(teamID, yearID, lgID, G, W, L, R, RA) %>% 
+  mutate(RD = R - RA, Wpct = W / (W + L), pytWpct = R^2 / (R^2 + RA^2), pytResiduals = Wpct - pytWpct)
+
+lm(myteams$pytWpct ~ myteams$Wpct)
+
+```
+
+
+```{r, echo = FALSE}
+ggplot(myteams, aes(y = pytWpct, x = Wpct)) + 
+	theme_bw() +
+	geom_point(cex = 2, alpha = 0.25) + 
+	ylab("Pythagorean Win %") + 
+	xlab("Win %") + 
+	stat_smooth(method = "lm", color = "dodgerblue")
+```
+
+##
+
+Let's run some code and see how it does:
+
+The 2017 Los Angeles Dodgers scored 770 runs against 580 allowed.
+
+```{r Pythag}
+round((770^2 / (770^2 + 580^2)) * 162)
+```
+
+The *Pythagorean expectation* suggests that the Dodgers should win 103 runs in the 2017 season. 
+
+They won 104.
+
+##
+
+I made a `shiny` app that is hosted on [`shinyapps.io`](https://butterflyology.shinyapps.io/pythagorean_expectation/). This app allows the user to provide a reasonable number of runs scored and allowed and then returns the number of expected wins. 
+
+```{r image, echo = FALSE, out.width = "600px", fig.align = "center"}
+knitr::include_graphics("images/App_screen_shot.png")
+```
+
+
